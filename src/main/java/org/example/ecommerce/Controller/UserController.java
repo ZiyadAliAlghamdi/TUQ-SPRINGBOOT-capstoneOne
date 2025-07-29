@@ -91,7 +91,7 @@ public class UserController {
 
 
 
-//discount using promo code
+
     @PutMapping("/applyDiscount")
     public ResponseEntity<?> applyDiscount(@RequestParam String productId, @RequestParam String promoCode){
         boolean applyStatus = userService.applyDiscount(productId, promoCode);

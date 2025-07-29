@@ -81,13 +81,11 @@ public class MerchantController {
 
     @PutMapping("/assignDiscount/{id}")
     public ResponseEntity<?> assignDiscount(@PathVariable String id, @RequestParam String promoCode, @RequestParam int percentage){
-
         boolean assign = merchantService.assignDiscount(id,promoCode,percentage);
 
         if (!assign){
             return ResponseEntity.status(400).body(new ApiResponse("an error occurs in assigning discount"));
         }
-
         return ResponseEntity.ok(new ApiResponse("Discount assigned"));
     }
 

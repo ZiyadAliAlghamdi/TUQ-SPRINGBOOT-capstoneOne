@@ -6,6 +6,7 @@ import org.example.ecommerce.Model.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -162,25 +163,10 @@ public class ProductService {
     }
 
     public ArrayList<Product> getTop10SoldItems() {
-        ArrayList<Product> topProducts = new ArrayList<>();
-
-        for (Product product : products) {
-            boolean added = false;
-            for (int i = 0; i < topProducts.size(); i++) {
-                if (product.getNumberOfBuyers() > topProducts.get(i).getNumberOfBuyers()) {
-                    topProducts.add(i, product);
-                    added = true;
-                    break;
-                }
-            }
-            if (!added && topProducts.size() < 10) {
-                topProducts.add(product);
-            }
-            if (topProducts.size() > 10) {
-                topProducts.remove(topProducts.size() - 1);
-            }
-        }
-        return topProducts;
+        return products.stream()
+                .sorted((p1,p2) -> Integer.compare(p2.getNumberOfBuyers(), p1.getNumberOfBuyers()))
+                .limit(10)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
 
