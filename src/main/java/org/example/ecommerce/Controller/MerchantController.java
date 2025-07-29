@@ -80,8 +80,8 @@ public class MerchantController {
     }
 
     @PutMapping("/assignDiscount/{id}")
-    public ResponseEntity<?> assignDiscount(@PathVariable String id, @RequestParam String promoCode, @RequestParam int percentage){
-        boolean assign = merchantService.assignDiscount(id,promoCode,percentage);
+    public ResponseEntity<?> assignDiscount(@PathVariable String id, @RequestParam int percentage){
+        boolean assign = merchantService.assignDiscount(id,percentage);
 
         if (!assign){
             return ResponseEntity.status(400).body(new ApiResponse("an error occurs in assigning discount"));
@@ -92,8 +92,8 @@ public class MerchantController {
 
     //B2B (merchant buy from other)
     @PutMapping("/b2b")
-    public ResponseEntity<?> b2b(@RequestParam String firstMerchantId, @RequestParam String secondMerchantId, @RequestParam int stockAmount){
-        String b2bResult =merchantService.b2b(firstMerchantId,secondMerchantId,stockAmount);
+    public ResponseEntity<?> b2b(@RequestParam String sellerMerchantId, @RequestParam String buyerMerchantId, @RequestParam String productID, @RequestParam int stockAmount){
+        String b2bResult =merchantService.b2b(sellerMerchantId, buyerMerchantId, productID, stockAmount);
         if (b2bResult.equalsIgnoreCase("b2b process completed")){
             return ResponseEntity.ok(b2bResult);
         }

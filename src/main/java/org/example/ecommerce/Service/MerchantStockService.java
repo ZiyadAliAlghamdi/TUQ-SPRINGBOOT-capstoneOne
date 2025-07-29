@@ -88,12 +88,11 @@ public class MerchantStockService {
     }
 
 
-    public MerchantStock getMerchantStockByMerchantId(String merchantId){
+    public MerchantStock getMerchantStockByProductIdAndMerchantId(String merchantId, String productId){
         return merchantStocks.stream()
-                .filter(ms -> ms.getMerchantID().equalsIgnoreCase(merchantId))
+                .filter(ms -> ms.getMerchantID().equalsIgnoreCase(merchantId) && ms.getProductID().equalsIgnoreCase(productId))
                 .findFirst()
                 .orElse(null);
     }
-    
 
 }

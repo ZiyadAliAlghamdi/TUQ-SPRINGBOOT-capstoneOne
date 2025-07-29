@@ -140,14 +140,23 @@ public class UserService {
         }
 
         int loyaltyPoints = user.getLoyaltyPoint();
-        int discountUnits = loyaltyPoints / 10;
-        double discountedPrice = product.getPrice() - discountUnits;
-        if (discountedPrice < 0) { // Ensure price doesn't go below zero
+        if (loyaltyPoints < 10) {
+            return "Not enough loyalty points to apply discount";
+        }
+
+        //10 points = 10 units discount
+        double discount = loyaltyPoints;
+        double discountedPrice = product.getPrice() - discount;
+        if (discountedPrice < 0) {
             discountedPrice = 0;
         }
-        product.setPrice(discountedPrice);
-        user.setLoyaltyPoint(loyaltyPoints % 10); // Deduct used loyalty points
-        return "Loyalty discount applied successfully";
+
+
+        user.setLoyaltyPoint(0);
+
+
+        return "Loyalty discount applied successfully. Final price: " + discountedPrice;
     }
+
 
 }
